@@ -54,7 +54,6 @@ configure do
 end
 
 get '/' do
-  Memos.set_storage(settings.storage)
   @memos = Memos.all.values
   slim :index
 end
@@ -67,4 +66,14 @@ post '/memos' do
   @memo = Memo.create(params[:title], params[:body])
   Memos.add(@memo)
   redirect to('/')
+end
+
+get '/memos/:id' do
+  @memo = Memos.find(params['id']).values.first
+  slim :show
+end
+
+get '/memos/:id/edit' do
+  @memo = Memos.find(params['id']).values.first
+  slim :edit
 end

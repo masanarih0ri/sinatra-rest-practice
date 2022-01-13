@@ -1,0 +1,7 @@
+h1 = 'メモアプリ'
+
+div
+  h2 = @memo.title
+  p = @memo.body
+  div
+    a href="/memos/#{@memo.id}/edit" 編集
