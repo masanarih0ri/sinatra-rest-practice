@@ -1,6 +1,7 @@
 h1 = 'メモアプリ'
 div.new_form
-  form method="post" action="/memos/:id"
+  form method="post" action="/memos/#{@memo.id}"
+    input type="hidden" name="_method" value="patch"
     .form-group
         label タイトル
         input.form-control type="text" name="title" value="#{@memo.title}"

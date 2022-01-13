@@ -37,14 +37,20 @@ end
 class Memo
   attr_accessor :id, :title, :body
 
-  def self.create(title, body)
-    new(title, body)
-  end
-
   def initialize(title, body, time = Time.now)
     @id = Digest::MD5.hexdigest(title + body + time.to_s)
     @title = title
     @body = body
+  end
+
+  def create(title, body)
+    new(title, body)
+  end
+
+  def update(title, body)
+    @title = title
+    @body = body
+    self
   end
 end
 
@@ -76,4 +82,11 @@ end
 get '/memos/:id/edit' do
   @memo = Memos.find(params['id']).values.first
   slim :edit
+end
+
+patch '/memos/:id' do
+  @memo = Memos.find(params['id']).values.first
+  @memo.update(params[:title], params[:body])
+  Memos.add(@memo)
+  redirect to("/memos/#{@memo.id}")
 end
