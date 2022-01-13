@@ -1,0 +1,10 @@
+h1 = 'メモアプリ'
+div.new_form
+  form method="post" action="/memos"
+    .form-group
+        label タイトル
+        input.form-control type="text" name="title"
+    .form-group
+        label メモ内容
+        textarea name="body"
+    button.btn.btn-default type="submit" 作成する
