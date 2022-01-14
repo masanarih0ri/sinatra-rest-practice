@@ -4,18 +4,18 @@ require 'pstore'
 require 'time'
 
 class Memos
-  def self.set_storage(storage)
+  def set_storage(storage)
     @@storage = storage
   end
 
-  def self.all
+  def all
     store = PStore.new(@@storage)
     store.transaction do
       store['memos'] || {}
     end
   end
 
-  def self.find(id)
+  def find(id)
     store = PStore.new(@@storage)
     store.transaction do
       memos = store['memos'] || {}
@@ -23,13 +23,20 @@ class Memos
     end
   end
 
-  def self.add(memo)
+  def add(memo)
     store = PStore.new(@@storage)
     store.transaction do
       memos = store['memos']
       memos = {} if memos.nil?
       memos[memo.id] = memo
       store['memos'] = memos
+    end
+  end
+
+  def delete(id)
+    store = PStore.new(@@storage)
+    store.transaction do
+      store['memos'].delete(id)
     end
   end
 end
@@ -56,7 +63,7 @@ end
 
 configure do
   set :root, Dir.pwd
-  set :storage, Dir.pwd + '/tmp/storage'
+  set :storage, Dir.pwd + '/tmp/storage.json'
 end
 
 get '/' do
@@ -89,4 +96,9 @@ patch '/memos/:id' do
   @memo.update(params[:title], params[:body])
   Memos.add(@memo)
   redirect to("/memos/#{@memo.id}")
+end
+
+delete '/memos/:id' do
+  Memos.delete(params[:id])
+  redirect to('/')
 end

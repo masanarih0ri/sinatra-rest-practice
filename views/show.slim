@@ -5,3 +5,7 @@ div
   p = @memo.body
   div
     a href="/memos/#{@memo.id}/edit" 編集
+  div
+    form method="post" action="/memos/#{@memo.id}"
+      input type="hidden" name="_method" value="delete"
+      button.btn.btn-default type="submit" 削除
