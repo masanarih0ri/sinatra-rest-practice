@@ -1,11 +1,13 @@
-h1 = 'メモアプリ'
-div.new_form
-  form method="post" action="/memos/#{@memo.id}"
-    input type="hidden" name="_method" value="patch"
-    .form-group
+== slim :_head
+div.container
+  h1 = 'メモ編集'
+  div.new_form
+    form method="post" action="/memos/#{@memo.id}"
+      input type="hidden" name="_method" value="patch"
+      .form-group.mb-2
         label タイトル
         input.form-control type="text" name="title" value="#{@memo.title}"
-    .form-group
+      .form-group.mb-2
         label メモ内容
-        textarea name="body" = @memo.body
-    button.btn.btn-default type="submit" 更新する
+        textarea.form-control name="body" = @memo.body
+      button.btn.btn-primary type="submit" 更新する

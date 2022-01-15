@@ -1,11 +1,13 @@
-h1 = 'メモアプリ'
-
-div
-  h2 = @memo.title
-  p = @memo.body
+== slim :_head
+div.container
+  h1 = 'メモ詳細'
   div
-    a href="/memos/#{@memo.id}/edit" 編集
-  div
-    form method="post" action="/memos/#{@memo.id}"
-      input type="hidden" name="_method" value="delete"
-      button.btn.btn-default type="submit" 削除
+    h2 = @memo.title
+    p = @memo.body
+    div.d-flex
+      div.me-2
+        a.btn.btn-primary href="/memos/#{@memo.id}/edit" 編集
+      div
+        form method="post" action="/memos/#{@memo.id}"
+          input type="hidden" name="_method" value="delete"
+          button.btn.btn-danger type="submit" 削除
