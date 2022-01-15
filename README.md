@@ -24,3 +24,4 @@ bundle install
 bundle exec app.rb
 ```
 
+`localhost:4567` にアクセスして動作を確認する
