@@ -6,23 +6,23 @@ require 'pstore'
 require 'time'
 
 class Memos
-  def all
-    store = PStore.new(@@storage)
+  def self.all
+    store = PStore.new('./tmp/storage.json')
     store.transaction do
       store['memos'] || {}
     end
   end
 
-  def find(id)
-    store = PStore.new(@@storage)
+  def self.find(id)
+    store = PStore.new('./tmp/storage.json')
     store.transaction do
       memos = store['memos'] || {}
       memos.select { |k| k == id }
     end
   end
 
-  def add(memo)
-    store = PStore.new(@@storage)
+  def self.add(memo)
+    store = PStore.new('./tmp/storage.json')
     store.transaction do
       memos = store['memos']
       memos = {} if memos.nil?
@@ -31,8 +31,8 @@ class Memos
     end
   end
 
-  def delete(id)
-    store = PStore.new(@@storage)
+  def self.delete(id)
+    store = PStore.new('./tmp/storage.json')
     store.transaction do
       store['memos'].delete(id)
     end
@@ -43,12 +43,13 @@ class Memo
   attr_accessor :id, :title, :body
 
   def initialize(title, body, time = Time.now)
+    # idをユニークにするための処理
     @id = Digest::MD5.hexdigest(title + body + time.to_s)
     @title = title
     @body = body
   end
 
-  def create(title, body)
+  def self.create(title, body)
     new(title, body)
   end
 
@@ -57,11 +58,6 @@ class Memo
     @body = body
     self
   end
-end
-
-configure do
-  set :root, Dir.pwd
-  set :storage, "#{Dir.pwd}/tmp/storage.json"
 end
 
 get '/' do
