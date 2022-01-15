@@ -106,3 +106,7 @@ delete '/memos/:id' do
   Memos.delete(params[:id])
   redirect to('/')
 end
+
+not_found do
+  slim :not_found
+end
