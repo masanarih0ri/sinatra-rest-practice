@@ -67,11 +67,15 @@ configure do
 end
 
 get '/' do
+  redirect to ('/memos')
+end
+
+get '/memos' do
   @memos = Memos.all.values
   slim :index
 end
 
-get '/new' do
+get '/memos/new' do
   slim :new
 end
 

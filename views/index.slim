@@ -1,5 +1,6 @@
 h1 = 'メモアプリ'
-
+div
+  a href="/memos/new" メモを作成する
 - @memos.each do |memo|
   div
     a href="/memos/#{memo.id}" #{memo.title}
