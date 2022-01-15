@@ -1,13 +1,11 @@
+# frozen_string_literal: true
+
 require 'sinatra'
 require 'sinatra/reloader'
 require 'pstore'
 require 'time'
 
 class Memos
-  def set_storage(storage)
-    @@storage = storage
-  end
-
   def all
     store = PStore.new(@@storage)
     store.transaction do
@@ -19,7 +17,7 @@ class Memos
     store = PStore.new(@@storage)
     store.transaction do
       memos = store['memos'] || {}
-      memos.select{|k,v| k == id}
+      memos.select { |k| k == id }
     end
   end
 
@@ -63,11 +61,11 @@ end
 
 configure do
   set :root, Dir.pwd
-  set :storage, Dir.pwd + '/tmp/storage.json'
+  set :storage, "#{Dir.pwd}/tmp/storage.json"
 end
 
 get '/' do
-  redirect to ('/memos')
+  redirect to('/memos')
 end
 
 get '/memos' do
