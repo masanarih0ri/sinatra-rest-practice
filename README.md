@@ -21,7 +21,7 @@ bundle install
 エラーが出なければ、以下のコマンドでサーバーを起動
 
 ```
-bundle exec app.rb
+bundle exec ruby application.rb
 ```
 
 `localhost:4567` にアクセスして動作を確認する
