@@ -3,15 +3,17 @@
 require 'pstore'
 
 class Memos
+  STORAGE_FILE = './tmp/storage'
+
   def self.all
-    store = PStore.new('./tmp/storage.json')
+    store = PStore.new(STORAGE_FILE)
     store.transaction do
       store['memos'] || {}
     end
   end
 
   def self.find(id)
-    store = PStore.new('./tmp/storage.json')
+    store = PStore.new(STORAGE_FILE)
     store.transaction do
       memos = store['memos'] || {}
       memos.select { |k| k == id }
@@ -19,7 +21,7 @@ class Memos
   end
 
   def self.add(memo)
-    store = PStore.new('./tmp/storage.json')
+    store = PStore.new(STORAGE_FILE)
     store.transaction do
       memos = store['memos']
       memos = {} if memos.nil?
@@ -29,7 +31,7 @@ class Memos
   end
 
   def self.delete(id)
-    store = PStore.new('./tmp/storage.json')
+    store = PStore.new(STORAGE_FILE)
     store.transaction do
       store['memos'].delete(id)
     end
