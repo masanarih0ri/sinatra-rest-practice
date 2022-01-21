@@ -25,17 +25,17 @@ post '/memos' do
 end
 
 get '/memos/:id' do
-  @memo = Memos.find(params['id']).values.first
+  @memo = Memos.find(params['id'])
   slim :show
 end
 
 get '/memos/:id/edit' do
-  @memo = Memos.find(params['id']).values.first
+  @memo = Memos.find(params['id'])
   slim :edit
 end
 
 patch '/memos/:id' do
-  @memo = Memos.find(params['id']).values.first
+  @memo = Memos.find(params['id'])
   @memo.update(params[:title], params[:body])
   Memos.add(@memo)
   redirect to("/memos/#{@memo.id}")

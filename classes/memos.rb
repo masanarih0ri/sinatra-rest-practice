@@ -17,15 +17,15 @@ class Memos
     store = PStore.new(STORAGE_FILE)
     store.transaction do
       memos = store['memos'] || {}
-      memos.select { |k| k == id }
+      memo = memos.select { |k| k == id }
+      memo.values.first
     end
   end
 
   def self.add(memo)
     store = PStore.new(STORAGE_FILE)
     store.transaction do
-      memos = store['memos']
-      memos = {} if memos.nil?
+      memos = store['memos'] || {}
       memos[memo.id] = memo
       store['memos'] = memos
     end
