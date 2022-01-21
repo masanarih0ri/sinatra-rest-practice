@@ -10,7 +10,7 @@ get '/' do
 end
 
 get '/memos' do
-  @memos = Memos.all.values
+  @memos = Memos.all
   slim :index
 end
 

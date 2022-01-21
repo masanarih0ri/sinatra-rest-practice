@@ -8,7 +8,8 @@ class Memos
   def self.all
     store = PStore.new(STORAGE_FILE)
     store.transaction do
-      store['memos'] || {}
+      memos = store['memos'] || {}
+      memos.values
     end
   end
 
