@@ -2,8 +2,8 @@
 
 require 'sinatra'
 require 'sinatra/reloader'
-require './classes/memo'
-require './classes/memos'
+require_relative 'classes/memo'
+require_relative 'classes/memos'
 
 get '/' do
   redirect to('/memos')
