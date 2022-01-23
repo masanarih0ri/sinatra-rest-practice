@@ -1,0 +1,12 @@
+== slim :_head
+div.container
+  h1 = 'メモ新規登録'
+  div
+    form method="post" action="/memos"
+      .form-group.mb-2
+        label タイトル
+        input.form-control type="text" name="title"
+      .form-group.mb-2
+        label メモ内容
+        textarea.form-control name="body"
+      button.btn.btn-primary type="submit" 作成する

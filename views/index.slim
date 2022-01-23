@@ -1,0 +1,10 @@
+== slim :_head
+div.container
+  h1 = 'メモ一覧'
+  div.text-end
+    a.btn.btn-primary href="/memos/new" メモを作成する
+  div
+    p.fs-3 = 'メモのタイトル'
+  - @memos.each do |memo|
+    div.mb-2
+      a.fs-5 href="/memos/#{memo.id}" #{memo.title}
