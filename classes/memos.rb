@@ -18,8 +18,7 @@ class Memos
     store = PStore.new(STORAGE_FILE)
     store.transaction do
       memos = store['memos'] || {}
-      memo = memos.select { |k| k == id }
-      memo.values.first
+      memos[id]
     end
   end
 
