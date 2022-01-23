@@ -4,6 +4,7 @@ require 'pstore'
 
 class Memos
   STORAGE_FILE = './tmp/storage'
+  private_constant :STORAGE_FILE
 
   def self.all
     store = PStore.new(STORAGE_FILE)
