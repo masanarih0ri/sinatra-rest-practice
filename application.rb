@@ -36,9 +36,10 @@ end
 
 patch '/memos/:id' do
   @memo = Memos.find(params['id'])
-  @memo.update(params[:title], params[:body])
-  Memos.add(@memo)
-  redirect to("/memos/#{@memo.id}")
+  @memo['title'] = params[:title]
+  @memo['body'] = params[:body]
+  Memos.update(@memo)
+  redirect to("/memos/#{@memo['id']}")
 end
 
 delete '/memos/:id' do

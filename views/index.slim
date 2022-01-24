@@ -7,4 +7,4 @@ div.container
     p.fs-3 = 'メモのタイトル'
   - @memos.each do |memo|
     div.mb-2
-      a.fs-5 href="/memos/#{memo.id}" #{memo.title}
+      a.fs-5 href="/memos/#{memo['id']}" #{memo['title']}

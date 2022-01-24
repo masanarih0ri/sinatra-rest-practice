@@ -2,12 +2,12 @@
 div.container
   h1 = 'メモ編集'
   div.new_form
-    form method="post" action="/memos/#{@memo.id}"
+    form method="post" action="/memos/#{@memo['id']}"
       input type="hidden" name="_method" value="patch"
       .form-group.mb-2
         label タイトル
-        input.form-control type="text" name="title" value="#{@memo.title}"
+        input.form-control type="text" name="title" value="#{@memo['title']}"
       .form-group.mb-2
         label メモ内容
-        textarea.form-control name="body" = @memo.body
+        textarea.form-control name="body" = @memo['body']
       button.btn.btn-primary type="submit" 更新する
