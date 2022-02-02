@@ -13,7 +13,7 @@ class Memos
   def self.all
     connection = PG.connect(dbname: 'memoapp')
     @memos = []
-	  query = "SELECT * FROM #{TABLE_NAME}"
+    query = "SELECT * FROM #{TABLE_NAME}"
     connection.prepare('all', query)
     results = connection.exec_prepared('all')
     results.map { |result| @memos << result }
@@ -32,14 +32,14 @@ class Memos
 
   def self.add(memo)
     connection = PG.connect(dbname: 'memoapp')
-		query = "INSERT INTO #{TABLE_NAME} (id, title, body, created_at) VALUES ('#{memo.id}', '#{memo.title}', '#{memo.body}', '#{memo.created_at}')"
+    query = "INSERT INTO #{TABLE_NAME} (id, title, body, created_at) VALUES ('#{memo.id}', '#{memo.title}', '#{memo.body}', '#{memo.created_at}')"
     connection.prepare('add', query)
 	  connection.exec_prepared('add')
 	end
 
   def self.update(memo)
     connection = PG.connect(dbname: 'memoapp')
-		query = "UPDATE #{TABLE_NAME} SET title = '#{memo['title']}', body = '#{memo['body']}' WHERE id = '#{memo['id']}'"
+    query = "UPDATE #{TABLE_NAME} SET title = '#{memo['title']}', body = '#{memo['body']}' WHERE id = '#{memo['id']}'"
     connection.prepare('update', query)
 	  connection.exec_prepared('update')
 	end
