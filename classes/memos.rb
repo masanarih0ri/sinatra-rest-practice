@@ -12,42 +12,34 @@ class Memos
 
   def self.all
     connection = PG.connect(dbname: 'memoapp')
-    @memos = []
-    query = "SELECT * FROM #{TABLE_NAME}"
-    connection.prepare('all', query)
+    connection.prepare('all', "SELECT * FROM #{TABLE_NAME} ORDER BY created_at")
     results = connection.exec_prepared('all')
-    results.map { |result| @memos << result }
-    @memos.sort {|a, b| a['created_at'] <=> b['created_at'] }
+    @memos = results.to_a
 	end
 
   def self.find(id)
-    memo = []
     connection = PG.connect(dbname: 'memoapp')
-    query = "SELECT * FROM #{TABLE_NAME} WHERE id = '#{id}'"
-    connection.prepare('find', query)
-    result = connection.exec_prepared('find')
-    result.map { |x| memo << x }
+    connection.prepare('find', "SELECT * FROM #{TABLE_NAME} WHERE id = $1")
+    result = connection.exec_prepared('find', [id])
+    memo = result.to_a
     memo[0]
   end
 
   def self.add(memo)
     connection = PG.connect(dbname: 'memoapp')
-    query = "INSERT INTO #{TABLE_NAME} (id, title, body, created_at) VALUES ('#{memo.id}', '#{memo.title}', '#{memo.body}', '#{memo.created_at}')"
-    connection.prepare('add', query)
-	  connection.exec_prepared('add')
+    connection.prepare('add', "INSERT INTO #{TABLE_NAME} (id, title, body, created_at) VALUES ($1, $2, $3, $4)")
+	  connection.exec_prepared('add', ["#{memo.id}", "#{memo.title}", "#{memo.body}", "#{memo.created_at}"])
 	end
 
   def self.update(memo)
     connection = PG.connect(dbname: 'memoapp')
-    query = "UPDATE #{TABLE_NAME} SET title = '#{memo['title']}', body = '#{memo['body']}' WHERE id = '#{memo['id']}'"
-    connection.prepare('update', query)
-	  connection.exec_prepared('update')
+    connection.prepare('update', "UPDATE #{TABLE_NAME} SET title = $1, body = $2 WHERE id = $3")
+	  connection.exec_prepared('update', ["#{memo['title']}", "#{memo['body']}", "#{memo['id']}"])
 	end
 
   def self.delete(id)
     connection = PG.connect(dbname: 'memoapp')
-    query = "DELETE FROM #{TABLE_NAME} WHERE id = '#{id}'"
-    connection.prepare('delete', query)
-    connection.exec_prepared('delete')
+    connection.prepare('delete', "DELETE FROM #{TABLE_NAME} WHERE id = $1")
+    connection.exec_prepared('delete', [id])
   end
 end
