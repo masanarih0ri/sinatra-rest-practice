@@ -24,15 +24,13 @@ class Memos
   end
 
   def self.add(memo, connection)
-    # connection = PG.connect(dbname: 'memoapp')
     connection.prepare('add', "INSERT INTO #{TABLE_NAME} (id, title, body, created_at) VALUES ($1, $2, $3, $4)")
-	  connection.exec_prepared('add', ["#{memo.id}", "#{memo.title}", "#{memo.body}", "#{memo.created_at}"])
+    connection.exec_prepared('add', ["#{memo.id}", "#{memo.title}", "#{memo.body}", "#{memo.created_at}"])
 	end
 
   def self.update(memo, connection)
-    # connection = PG.connect(dbname: 'memoapp')
     connection.prepare('update', "UPDATE #{TABLE_NAME} SET title = $1, body = $2 WHERE id = $3")
-	  connection.exec_prepared('update', ["#{memo['title']}", "#{memo['body']}", "#{memo['id']}"])
+    connection.exec_prepared('update', ["#{memo['title']}", "#{memo['body']}", "#{memo['id']}"])
 	end
 
   def self.delete(id, connection)
