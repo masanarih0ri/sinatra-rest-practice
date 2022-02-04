@@ -2,12 +2,12 @@
 div.container
   h1 = 'メモ詳細'
   div
-    h2 = @memo.title
-    p = @memo.body
+    h2 = @memo['title']
+    p = @memo['body']
     div.d-flex
       div.me-2
-        a.btn.btn-primary href="/memos/#{@memo.id}/edit" 編集
+        a.btn.btn-primary href="/memos/#{@memo['id']}/edit" 編集
       div
-        form method="post" action="/memos/#{@memo.id}"
+        form method="post" action="/memos/#{@memo['id']}"
           input type="hidden" name="_method" value="delete"
           button.btn.btn-danger type="submit" 削除
